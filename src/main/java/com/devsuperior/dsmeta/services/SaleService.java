@@ -19,30 +19,30 @@ import com.devsuperior.dsmeta.repositories.SaleRepository;
 @Service
 public class SaleService {
 
-	@Autowired
-	private SaleRepository repository;
-	
-	public SaleMinDTO findById(Long id) {
-		Optional<Sale> result = repository.findById(id);
-		Sale entity = result.get();
-		return new SaleMinDTO(entity);
-	}
+    @Autowired
+    private SaleRepository repository;
 
-	public List<SaleSummaryDTO> searchSummary(String minDate, String maxDate){
-		LocalDate max;
-		if(maxDate == null || maxDate.isBlank()){
-			max = LocalDate.ofInstant(Instant.now(), ZoneId.systemDefault());
-		} else {
-			max = LocalDate.parse(maxDate);
-		}
+    public SaleMinDTO findById(Long id) {
+        Optional<Sale> result = repository.findById(id);
+        Sale entity = result.get();
+        return new SaleMinDTO(entity);
+    }
 
-		LocalDate min;
-		if(minDate == null || minDate.isBlank()){
-			min = max.minusYears(1L);
-		} else {
-			min = LocalDate.parse(minDate);
-		}
+    public List<SaleSummaryDTO> searchSummary(String minDate, String maxDate, String name) {
+        LocalDate max;
+        if (maxDate == null || maxDate.isBlank()) {
+            max = LocalDate.ofInstant(Instant.now(), ZoneId.systemDefault());
+        } else {
+            max = LocalDate.parse(maxDate);
+        }
 
-		return repository.searchSummary(min, max);
-	}
+        LocalDate min;
+        if (minDate == null || minDate.isBlank()) {
+            min = max.minusYears(1L);
+        } else {
+            min = LocalDate.parse(minDate);
+        }
+
+        return repository.searchSummary(min, max, name);
+    }
 }
