@@ -45,4 +45,22 @@ public class SaleService {
 
         return repository.searchSummary(min, max, name);
     }
+
+    public Page<SaleMinDTO> getReport(String minDate, String maxDate, String name, Pageable pageable) {
+        LocalDate max;
+        if (maxDate == null || maxDate.isBlank()) {
+            max = LocalDate.ofInstant(Instant.now(), ZoneId.systemDefault());
+        } else {
+            max = LocalDate.parse(maxDate);
+        }
+
+        LocalDate min;
+        if (minDate == null || minDate.isBlank()) {
+            min = max.minusYears(1L);
+        } else {
+            min = LocalDate.parse(minDate);
+        }
+
+        return repository.getReport(min, max, name, pageable);
+    }
 }
