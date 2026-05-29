@@ -25,6 +25,6 @@ public interface SaleRepository extends JpaRepository<Sale, Long> {
             "WHERE obj.date BETWEEN :min AND :max " +
             "AND UPPER (obj.seller.name) " +
             "LIKE UPPER(CONCAT('%', :name, '%')) " +
-            "ORDER BY obj.seller.name")
+            "ORDER BY obj.id")
     Page<SaleMinDTO> getReport(LocalDate min, LocalDate max, String name, Pageable pageable);
 }
